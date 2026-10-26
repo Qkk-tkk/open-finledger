@@ -26,3 +26,39 @@ Response:
   "service": "open-finledger"
 }
 ```
+## Account API
+
+### Create Account
+
+```http
+POST /api/v1/accounts
+Content-Type: application/json
+```
+
+Request:
+
+```json
+{
+  "ownerName": "Alice",
+  "currency": "CNY"
+}
+```
+
+Response:
+
+```json
+{
+  "id": "generated-uuid",
+  "ownerName": "Alice",
+  "balance": 0,
+  "currency": "CNY"
+}
+```
+
+### Get Account
+
+```http
+GET /api/v1/accounts/{id}
+```
+
+The `{id}` value is returned when an account is created.
