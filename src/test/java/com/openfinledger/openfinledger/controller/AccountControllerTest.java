@@ -37,4 +37,20 @@ class AccountControllerTest {
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().ownerName()).isEqualTo("Bob");
     }
-}
+
+    @Test
+    void shouldRejectBlankOwnerName() {
+        Map<String, String> request = Map.of(
+                "ownerName", "",
+                "currency", "CNY"
+        );
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                "/api/v1/accounts",
+                request,
+                String.class
+        );
+
+        assertThat(response.getStatusCode())
+                .isEqualTo(HttpStatus.BAD_REQUEST);
+    }}
