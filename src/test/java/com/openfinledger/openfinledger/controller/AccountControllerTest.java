@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -77,4 +78,15 @@ class AccountControllerTest {
             assertThat(response.getBody())
                     .anyMatch(account -> account.ownerName().equals("Carol"));
         }
+    @Test
+    void shouldReturnNotFoundJson() {
+        ResponseEntity<String> response = restTemplate.getForEntity(
+                "/api/v1/accounts/" + UUID.randomUUID(),
+                String.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getBody()).contains("\"status\":404");
+        assertThat(response.getBody()).contains("Account not found");
+    }
 }
