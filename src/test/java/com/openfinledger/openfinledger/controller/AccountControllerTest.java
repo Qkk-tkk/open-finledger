@@ -53,4 +53,28 @@ class AccountControllerTest {
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
-    }}
+    }
+    @Test
+        void shouldListAccounts() {
+            Map<String, String> request = Map.of(
+                    "ownerName", "Carol",
+                    "currency", "CNY"
+            );
+
+            restTemplate.postForEntity(
+                    "/api/v1/accounts",
+                    request,
+                    Account.class
+            );
+
+            ResponseEntity<Account[]> response = restTemplate.getForEntity(
+                    "/api/v1/accounts",
+                    Account[].class
+            );
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotNull();
+            assertThat(response.getBody())
+                    .anyMatch(account -> account.ownerName().equals("Carol"));
+        }
+}
