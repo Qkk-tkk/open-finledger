@@ -62,3 +62,21 @@ GET /api/v1/accounts/{id}
 ```
 
 The `{id}` value is returned when an account is created.
+### List Accounts
+
+```http
+GET /api/v1/accounts
+```
+
+Response:
+
+```json
+[
+  {
+    "id": "generated-uuid",
+    "ownerName": "Alice",
+    "balance": 0,
+    "currency": "CNY"
+  }
+]
+```
